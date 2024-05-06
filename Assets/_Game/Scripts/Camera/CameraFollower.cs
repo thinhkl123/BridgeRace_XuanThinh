@@ -21,7 +21,7 @@ public class CameraFollower : MonoBehaviour
     {
         distance = new Vector3(0, 0, -12f) - transform.position;
         FinishPoint.OnLose += FinishPoint_OnLose;
-        LevelManager.instance.OnLoadLevel += LevelManager_OnLoadLevel;
+        LevelManager.Ins.OnLoadLevel += LevelManager_OnLoadLevel;
     }
 
     private void LevelManager_OnLoadLevel(object sender, System.EventArgs e)
@@ -37,7 +37,7 @@ public class CameraFollower : MonoBehaviour
     private void OnDestroy()
     {
         FinishPoint.OnLose -= FinishPoint_OnLose;
-        LevelManager.instance.OnLoadLevel -= LevelManager_OnLoadLevel;
+        LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
     }
 
     private void FinishPoint_OnLose(object sender, FinishPoint.OnLoseEventArgs e)
@@ -48,6 +48,8 @@ public class CameraFollower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(initTarget);
+
         if (target.position.y >= 0)
         {
             Follow();

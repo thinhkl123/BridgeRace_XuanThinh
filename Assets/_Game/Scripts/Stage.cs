@@ -36,7 +36,7 @@ public class Stage : MonoBehaviour
 
     public void SpawnColor(ColorType colorType)
     {
-        int amount = spawnPosCount / LevelManager.instance.charAmount;
+        int amount = spawnPosCount / LevelManager.Ins.charAmount;
 
         for (int i = 0; i < amount; i++)
         {

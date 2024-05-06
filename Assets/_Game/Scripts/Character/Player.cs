@@ -17,18 +17,19 @@ public class Player : Character
     private void Start()
     {
         FinishPoint.OnWin += FinishPoint_OnWin;
-        LevelManager.instance.OnLoadLevel += LevelManager_OnLoadLevel;
+        LevelManager.Ins.OnLoadLevel += LevelManager_OnLoadLevel;
     }
 
     private void OnDestroy()
     {
         FinishPoint.OnWin -= FinishPoint_OnWin;
-        LevelManager.instance.OnLoadLevel -= LevelManager_OnLoadLevel;
+        LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
     }
 
     private void LevelManager_OnLoadLevel(object sender, System.EventArgs e)
     {
         Init();
+        animator.SetFloat("Speed", 0);
     }
 
     private void FinishPoint_OnWin(object sender, System.EventArgs e)
@@ -48,7 +49,7 @@ public class Player : Character
 
     private void CalculateMove()
     {
-        if (GameMainManager.instance.state != GameMainManager.GameState.Playing)
+        if (GameMainManager.Ins.state != GameMainManager.GameState.Playing)
         {
             return;
         }

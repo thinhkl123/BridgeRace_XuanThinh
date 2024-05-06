@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMainManager : MonoBehaviour
+public class GameMainManager : Singleton<GameMainManager>
 {
-    public static GameMainManager instance {  get; private set; }
+    //public static GameMainManager instance {  get; private set; }
 
     public event EventHandler OnStateChange;
 
@@ -24,9 +24,25 @@ public class GameMainManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        //instance = this;
         state = GameState.WaitToStart;
+    }
+
+    private void Start()
+    {
+        LevelManager.Ins.OnLoadLevel += LevelManager_OnLoadLevel;
+
         UIManager.Ins.OpenUI<StartUI>();
+
+        //Open to update score level up
+        UIManager.Ins.OpenUI<WinUI>();
+        UIManager.Ins.CloseUI<WinUI>();
+    }
+
+    private void LevelManager_OnLoadLevel(object sender, EventArgs e)
+    {
+        state = GameState.CountDownToStart;
+        UIManager.Ins.OpenUI<CountDownUI>();
     }
 
     private void Update()
@@ -34,7 +50,6 @@ public class GameMainManager : MonoBehaviour
         switch (state)
         {
             case GameState.WaitToStart:
-                countDownToStartTime = 3f;
                 break;
             case GameState.CountDownToStart:
                 countDownToStartTime -= Time.deltaTime;
@@ -43,6 +58,7 @@ public class GameMainManager : MonoBehaviour
                     state = GameState.Playing;
                     OnStateChange?.Invoke(this, EventArgs.Empty);
                     UIManager.Ins.CloseUI<CountDownUI>();
+                    countDownToStartTime = 3f;
                 }
                 break;
             case GameState.Playing:

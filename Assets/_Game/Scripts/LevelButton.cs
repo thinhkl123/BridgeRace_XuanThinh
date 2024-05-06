@@ -21,13 +21,13 @@ public class LevelButton : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(() =>
         {
             //Debug.Log("Click");
-            if (GetLevelIdx() == LevelManager.instance.curLevel)
+            if (GetLevelIdx() == LevelManager.Ins.curLevel)
             {
                 return;
             }
             SetSelect();
             OnLevelChange?.Invoke(this, EventArgs.Empty);
-            LevelManager.instance.curLevel = GetLevelIdx();
+            LevelManager.Ins.curLevel = GetLevelIdx();
         });
     }
 

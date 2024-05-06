@@ -23,7 +23,7 @@ public class Bot : Character
     {
         Init();
         destination = transform.position;
-        agent.agentTypeID = LevelManager.instance.agentId;
+        agent.agentTypeID = LevelManager.Ins.agentId;
     }
 
     private void Start()
@@ -33,7 +33,7 @@ public class Bot : Character
 
     private void Update()
     {
-        if (GameMainManager.instance.state != GameMainManager.GameState.Playing)
+        if (GameMainManager.Ins.state != GameMainManager.GameState.Playing)
         {
             return;
         }

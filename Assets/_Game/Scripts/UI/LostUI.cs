@@ -13,13 +13,13 @@ public class LostUI : UICanvas
         reStartBtn.onClick.AddListener(() =>
         {
             Close(0);
-            LevelManager.instance.LoadLevel(LevelManager.instance.curLevel);
+            LevelManager.Ins.LoadLevel(LevelManager.Ins.curLevel);
         });
 
         homeBtn.onClick.AddListener(() =>
         {
             Close(0);
-            GameMainManager.instance.state = GameMainManager.GameState.WaitToStart;
+            GameMainManager.Ins.state = GameMainManager.GameState.WaitToStart;
             UIManager.Ins.OpenUI<StartUI>();
         });
     }

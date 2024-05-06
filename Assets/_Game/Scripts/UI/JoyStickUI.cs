@@ -6,14 +6,14 @@ public class JoyStickUI : MonoBehaviour
 {
     private void Start()
     {
-        GameMainManager.instance.OnStateChange += GameManager_OnStateChange;
+        GameMainManager.Ins.OnStateChange += GameManager_OnStateChange;
 
         Hide();
     }
 
     private void GameManager_OnStateChange(object sender, System.EventArgs e)
     {
-        if (GameMainManager.instance.state == GameMainManager.GameState.Playing || GameMainManager.instance.state == GameMainManager.GameState.CountDownToStart)
+        if (GameMainManager.Ins.state == GameMainManager.GameState.Playing || GameMainManager.Ins.state == GameMainManager.GameState.CountDownToStart)
         {
             Show();
         }

@@ -26,7 +26,7 @@ public class FinishPoint : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Win");
-            GameMainManager.instance.state = GameMainManager.GameState.GameOver;
+            GameMainManager.Ins.state = GameMainManager.GameState.GameOver;
             ShowParicle();
             OnWin?.Invoke(this, EventArgs.Empty);
             Invoke(nameof(Win), 1f);
@@ -34,7 +34,7 @@ public class FinishPoint : MonoBehaviour
         else if (other.CompareTag("Bot"))
         {
             Debug.Log("Lose");
-            GameMainManager.instance.state = GameMainManager.GameState.GameOver;
+            GameMainManager.Ins.state = GameMainManager.GameState.GameOver;
             ShowParicle();
             Bot bot = other.GetComponent<Bot>();
             bot.ClearBrick();
@@ -61,6 +61,7 @@ public class FinishPoint : MonoBehaviour
     private void Win()
     {
         UIManager.Ins.OpenUI<WinUI>();
+        UIManager.Ins.GetUI<WinUI>().UpdateLevelUpText();
     }
 
     private void Lose()

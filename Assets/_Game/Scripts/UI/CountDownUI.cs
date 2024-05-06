@@ -13,7 +13,7 @@ public class CountDownUI : UICanvas
 
     private void Update()
     {
-        currentTime = Mathf.Ceil(GameMainManager.instance.GetCountDownTime());
+        currentTime = Mathf.Ceil(GameMainManager.Ins.GetCountDownTime());
         timeText.text = currentTime.ToString();
 
         if (prevTime != currentTime)

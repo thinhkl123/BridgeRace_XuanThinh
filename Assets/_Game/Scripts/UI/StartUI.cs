@@ -28,6 +28,7 @@ public class StartUI : UICanvas
         });
     }
 
+
     private void Start()
     {
         LevelButton.OnLevelChange += LevelButton_OnLevelChange;
@@ -51,22 +52,21 @@ public class StartUI : UICanvas
 
     private void LevelButton_OnLevelChange(object sender, System.EventArgs e)
     {
-        levelBtnList[LevelManager.instance.curLevel - 1].SetNonSelect();
+        levelBtnList[LevelManager.Ins.curLevel - 1].SetNonSelect();
     }
 
     private void StartButtonClick()
     {
         //Debug.Log("Start");
-        GameMainManager.instance.state = GameMainManager.GameState.CountDownToStart;
-        GameMainManager.instance.StateChange();
+        //GameMainManager.instance.state = GameMainManager.GameState.CountDownToStart;
         Close(0);
-        LevelManager.instance.LoadLevel(LevelManager.instance.curLevel);
-        UIManager.Ins.OpenUI<CountDownUI>();
+        LevelManager.Ins.LoadLevel(LevelManager.Ins.curLevel);
+        GameMainManager.Ins.StateChange();
     }
 
     private void InitLevelBtn()
     {
-        int maxLevel = LevelManager.instance.curMaxLevel;
+        int maxLevel = LevelManager.Ins.curMaxLevel;
 
         for (int i = 0; i < maxLevel-1; i++)
         {
@@ -77,9 +77,10 @@ public class StartUI : UICanvas
 
         levelBtnList[maxLevel-1].SetActive();
         levelBtnList[maxLevel-1].SetSelect();
-        if (LevelManager.instance.curLevel > 1)
+
+        if (LevelManager.Ins.curLevel > 1)
         {
-            SnapTo(target);
+            SnapTo(levelBtnList[maxLevel-1].GetComponent<RectTransform>());
         }
 
         for (int i=maxLevel; i<levelBtnList.Length; i++)

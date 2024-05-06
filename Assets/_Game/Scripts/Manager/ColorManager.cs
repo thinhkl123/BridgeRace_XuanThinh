@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorManager : MonoBehaviour
+public class ColorManager : Singleton<ColorManager>
 {
-    public static ColorManager instance {  get; private set; }
+    //public static ColorManager instance {  get; private set; }
 
     [SerializeField] private int maxColorAmout;
 
@@ -15,7 +15,7 @@ public class ColorManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        //instance = this;
     }
 
     private void Init()
@@ -34,7 +34,7 @@ public class ColorManager : MonoBehaviour
 
         colorTypes = new List<ColorType>();
 
-        for (int i = 0; i < LevelManager.instance.charAmount; i++)
+        for (int i = 0; i < LevelManager.Ins.charAmount; i++)
         {
             int ranIdx = Random.Range(0, colorTypeList.Count);
 

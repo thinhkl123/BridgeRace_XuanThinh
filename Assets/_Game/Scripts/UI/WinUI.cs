@@ -17,21 +17,24 @@ public class WinUI : UICanvas
 
         continueBtn.onClick.AddListener(() =>
         {
-            Close(0);
-            LevelManager.instance.curLevel++;
-            LevelManager.instance.LoadLevel(LevelManager.instance.curLevel);
+            if (LevelManager.Ins.curLevel+1 <= LevelManager.Ins.MaxLevel)
+            {
+                Close(0);
+                LevelManager.Ins.curLevel++;
+                LevelManager.Ins.LoadLevel(LevelManager.Ins.curLevel);
+            }
         });
 
         reStartBtn.onClick.AddListener(() =>
         {
             Close(0);
-            LevelManager.instance.LoadLevel(LevelManager.instance.curLevel);
+            LevelManager.Ins.LoadLevel(LevelManager.Ins.curLevel);
         });
 
         homeBtn.onClick.AddListener(() =>
         {
             Close(0);
-            GameMainManager.instance.state = GameMainManager.GameState.WaitToStart;
+            GameMainManager.Ins.state = GameMainManager.GameState.WaitToStart;
             UIManager.Ins.OpenUI<StartUI>();
         });
     }
@@ -46,8 +49,9 @@ public class WinUI : UICanvas
         UpdateLevelUpText();
     }
 
-    private void UpdateLevelUpText()
+    public void UpdateLevelUpText()
     {
-        levelUpText.text = (LevelManager.instance.curLevel+1).ToString();
+        levelUpText.text = (LevelManager.Ins.curLevel+1).ToString();
+        Debug.Log(levelUpText.text);
     }
 }

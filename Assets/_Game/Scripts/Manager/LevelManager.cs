@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
-    public static LevelManager instance {  get; private set; }
+    //public static LevelManager instance {  get; private set; }
 
     public event EventHandler OnLoadLevel;
 
@@ -15,19 +15,23 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Character botPrefab;
     [SerializeField] private int maxLevel = 4;
 
+    public int MaxLevel
+    {
+        get { return maxLevel; } 
+    }
     public int charAmount;
     public int curMaxLevel;
     public int curLevel;
 
     public int agentId;
 
-    private Level levelGameObject;
+    public Level levelGameObject;
     private List<Character> characterList;
     private List<Transform> spawnCharPosList;
 
     private void Awake()
     {
-        instance = this;
+        //instance = this;
         characterList = new List<Character>();
         curMaxLevel = PlayerPrefs.GetInt("MaxLevel", 1);
         curLevel = curMaxLevel;
@@ -53,9 +57,12 @@ public class LevelManager : MonoBehaviour
     {
         OnLoadLevel?.Invoke(this, EventArgs.Empty);
 
+        UIManager.Ins.OpenUI<PlayUI>();
+        UIManager.Ins.GetUI<PlayUI>().UpdateLevelText();
+
         if (levelGameObject != null)
         {
-            Destroy(levelGameObject);
+            Destroy(levelGameObject.gameObject);
         }
 
         levelGameObject = Instantiate(levelList[levelIdx-1].prefab);
@@ -63,7 +70,7 @@ public class LevelManager : MonoBehaviour
 
         GetSpawnCharPosList();
 
-        ColorManager.instance.GetColor();
+        ColorManager.Ins.GetColor();
 
         agentId = levelList[levelIdx - 1].agentTypeId;
 
@@ -96,9 +103,8 @@ public class LevelManager : MonoBehaviour
         ranIdx = Random.Range(0, spawnCharPosList.Count);
         playerPrefab.transform.position = spawnCharPosList[ranIdx].position;
         spawnCharPosList.RemoveAt(ranIdx);
-        playerPrefab.ChangeColor(ColorManager.instance.GetColorToObject());
+        playerPrefab.ChangeColor(ColorManager.Ins.GetColorToObject());
         playerPrefab.gameObject.SetActive(true);
-        characterList.Add(playerPrefab);
 
         //Spawn Bot
 
@@ -107,7 +113,7 @@ public class LevelManager : MonoBehaviour
             ranIdx = Random.Range(0, spawnCharPosList.Count);
             Character bot = Instantiate(botPrefab, spawnCharPosList[ranIdx].position, botPrefab.transform.rotation);
             spawnCharPosList.RemoveAt(ranIdx);
-            bot.ChangeColor(ColorManager.instance.GetColorToObject());
+            bot.ChangeColor(ColorManager.Ins.GetColorToObject());
             characterList.Add(bot);
         }
     }
