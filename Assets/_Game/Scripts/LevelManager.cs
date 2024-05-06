@@ -1,16 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance {  get; private set; }
 
+    public event EventHandler OnLoadLevel;
+
     [SerializeField] private List<LevelSO> levelList;
     [SerializeField] private Character playerPrefab;
     [SerializeField] private Character botPrefab;
+    [SerializeField] private int maxLevel = 4;
 
     public int charAmount;
+    public int curMaxLevel;
+    public int curLevel;
+
+    public int agentId;
 
     private Level levelGameObject;
     private List<Character> characterList;
@@ -19,16 +28,31 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        characterList = new List<Character>();  
+        characterList = new List<Character>();
+        curMaxLevel = PlayerPrefs.GetInt("MaxLevel", 1);
+        curLevel = curMaxLevel;
     }
 
     private void Start()
     {
-        LoadLevel(1);
+        //LoadLevel(1);
+        FinishPoint.OnWin += FinishPoint_OnWin;
     }
 
-    private void LoadLevel(int levelIdx)
+    private void OnDestroy()
     {
+        FinishPoint.OnWin -= FinishPoint_OnWin;
+    }
+
+    private void FinishPoint_OnWin(object sender, EventArgs e)
+    {
+        UpdateLevelMax();
+    }
+
+    public void LoadLevel(int levelIdx)
+    {
+        OnLoadLevel?.Invoke(this, EventArgs.Empty);
+
         if (levelGameObject != null)
         {
             Destroy(levelGameObject);
@@ -41,7 +65,11 @@ public class LevelManager : MonoBehaviour
 
         ColorManager.instance.GetColor();
 
+        agentId = levelList[levelIdx - 1].agentTypeId;
+
         SpawnChar();
+
+
     }
 
     private void GetSpawnCharPosList()
@@ -62,6 +90,7 @@ public class LevelManager : MonoBehaviour
             characterList.RemoveAt(i);
         }
 
+        //Spawn Player
         int ranIdx;
 
         ranIdx = Random.Range(0, spawnCharPosList.Count);
@@ -71,6 +100,8 @@ public class LevelManager : MonoBehaviour
         playerPrefab.gameObject.SetActive(true);
         characterList.Add(playerPrefab);
 
+        //Spawn Bot
+
         for (int i = 1; i < charAmount; i++)
         {
             ranIdx = Random.Range(0, spawnCharPosList.Count);
@@ -78,6 +109,15 @@ public class LevelManager : MonoBehaviour
             spawnCharPosList.RemoveAt(ranIdx);
             bot.ChangeColor(ColorManager.instance.GetColorToObject());
             characterList.Add(bot);
+        }
+    }
+
+    private void UpdateLevelMax()
+    {
+        if (curMaxLevel < curLevel+1)
+        {
+            curMaxLevel = curLevel + 1;
+            PlayerPrefs.SetInt("MaxLevel", curMaxLevel);
         }
     }
 }

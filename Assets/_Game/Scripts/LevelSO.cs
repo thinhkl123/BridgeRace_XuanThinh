@@ -8,4 +8,5 @@ public class LevelSO : ScriptableObject
     public int levelIndex;
     public Level prefab;
     public int charAmount;
+    public int agentTypeId;
 }

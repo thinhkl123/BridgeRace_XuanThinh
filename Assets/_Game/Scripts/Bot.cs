@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Bot : Character
 {
-    [SerializeField] private NavMeshAgent agent;
+    public NavMeshAgent agent;
     [SerializeField] private Animator animator;
     [SerializeField] private int brickContainerAmount;
 
@@ -23,6 +23,7 @@ public class Bot : Character
     {
         Init();
         destination = transform.position;
+        agent.agentTypeID = LevelManager.instance.agentId;
     }
 
     private void Start()
@@ -86,7 +87,7 @@ public class Bot : Character
         switch (state)
         {
             case State.CollectBrick:
-                brickContainerAmount = Random.Range(7,10);
+                brickContainerAmount = 20; //Random.Range(7,10);
                 break;
             case State.MoveStair:
                 break;

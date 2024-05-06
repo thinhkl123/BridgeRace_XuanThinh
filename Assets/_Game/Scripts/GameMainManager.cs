@@ -14,6 +14,8 @@ public class GameMainManager : MonoBehaviour
         WaitToStart,
         CountDownToStart,
         Playing,
+        Pause,
+        GameOver
     }
 
     public GameState state;
@@ -44,6 +46,10 @@ public class GameMainManager : MonoBehaviour
                 }
                 break;
             case GameState.Playing:
+                break;
+            case GameState.Pause:
+                break;
+            case GameState.GameOver: 
                 break;
         }
     }

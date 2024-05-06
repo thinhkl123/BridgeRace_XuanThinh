@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3577273147674072455}
   m_Layer: 0
   m_Name: Bot
-  m_TagString: Untagged
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   visual: {fileID: 7309339792797764614}
-  timeToSpawnBrick: 10
   brickCount: 0
   stage: {fileID: 0}
   agent: {fileID: 3577273147674072455}

@@ -9,6 +9,7 @@ public class Character : ColorObject
     const string BRICKTAG = "Brick";
     const string BLOCKSTEP = "BlockStep";
     const string STAGE = "Stage";
+    const string FINISHPOINT = "FinishPoint";
 
     [SerializeField] private Transform brickContainer;
     [SerializeField] private Brick brickPrefab;
@@ -20,6 +21,11 @@ public class Character : ColorObject
     public Stage stage;
 
     private List<Brick> brickList;
+
+    private void Awake()
+    {
+        Init();
+    }
 
     public virtual void Init()
     {
@@ -62,7 +68,6 @@ public class Character : ColorObject
                 //Debug.Log(hit.point.y + " " + stage.transform.position.y);
                 if (hit.point.y < stage.transform.position.y)
                 {
-                    Debug.Log(1);
                     return TF.position;
                 }
                 else
@@ -105,6 +110,12 @@ public class Character : ColorObject
                 SetStage(newStage);
             }
         }
+        /*
+        else if (other.CompareTag(FINISHPOINT))
+        {
+            Debug.Log("Win");
+        }
+        */
     }
 
     private void AddBirck()
@@ -147,8 +158,20 @@ public class Character : ColorObject
         }
         else if (stage.transform.position != newStage.transform.position)
         {
+            stage.RemoveAllBrick(colorType);
             stage = newStage;
             stage.SpawnColor(colorType);
         }
+    }
+
+    public void ClearBrick()
+    {
+        for (int i = brickList.Count - 1; i >= 0; i--)
+        {
+            Brick brick = brickList[i];
+            Destroy(brick.gameObject);
+            brickList.RemoveAt(i);
+        }
+        brickCount = 0;
     }
 }

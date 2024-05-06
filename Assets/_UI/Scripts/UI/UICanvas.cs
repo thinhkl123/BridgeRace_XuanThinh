@@ -13,7 +13,7 @@ public class UICanvas : MonoBehaviour
 
     private void Start()
     {
-        OnInit();
+        //OnInit();
     }
 
     //Init default Canvas

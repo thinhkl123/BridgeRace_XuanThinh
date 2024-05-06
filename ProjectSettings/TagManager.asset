@@ -7,6 +7,8 @@ TagManager:
   - Brick
   - BlockStep
   - Stage
+  - FinishPoint
+  - Bot
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - UI
   - Ground
   - Stair
-  - 
+  - Step
   - 
   - 
   - 

@@ -46,11 +46,11 @@ GameObject:
   - component: {fileID: 5949557209777170042}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3305033866292090532
 Transform:
   m_ObjectHideFlags: 0
@@ -92,10 +92,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   visual: {fileID: 9144901030433286043}
-  timeToSpawnBrick: 10
   brickCount: 0
   stage: {fileID: 0}
-  speed: 5
+  speed: 7
   joystick: {fileID: 0}
   animator: {fileID: 2884867674799193569}
 --- !u!136 &4120404370016575622
@@ -120,7 +119,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Center: {x: 0, y: 1.9, z: 0}
 --- !u!54 &5949557209777170042
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -14,9 +14,26 @@ public class Player : Character
     private float moveHorizontal;
     private float moveVertical;
 
-    private void Awake()
+    private void Start()
+    {
+        FinishPoint.OnWin += FinishPoint_OnWin;
+        LevelManager.instance.OnLoadLevel += LevelManager_OnLoadLevel;
+    }
+
+    private void OnDestroy()
+    {
+        FinishPoint.OnWin -= FinishPoint_OnWin;
+        LevelManager.instance.OnLoadLevel -= LevelManager_OnLoadLevel;
+    }
+
+    private void LevelManager_OnLoadLevel(object sender, System.EventArgs e)
     {
         Init();
+    }
+
+    private void FinishPoint_OnWin(object sender, System.EventArgs e)
+    {
+        ClearBrick();
     }
 
     private void Update()

@@ -14,11 +14,13 @@ public class Stage : MonoBehaviour
     public List<Brick> brickList;
 
     private int spawnPosCount;
+    private List<ColorType> colorNotSpawnList;
 
     private void Awake()
     {
         spawnPosList = new List<Vector3>();
         brickList = new List<Brick>();
+        colorNotSpawnList = new List<ColorType>();
         Init();
     }
 
@@ -74,12 +76,33 @@ public class Stage : MonoBehaviour
         //Debug.Log(brick.transform);
         brickList.Remove(brick);
         Destroy(brick.gameObject);
-        StartCoroutine(SpawnBrickAgain(colorType));
+        if (!colorNotSpawnList.Contains(colorType))
+        {
+            StartCoroutine(SpawnBrickAgain(colorType));
+        }
     }
 
     IEnumerator SpawnBrickAgain(ColorType colorType)
     {
         yield return new WaitForSeconds(10);
-        SpawnBrick(colorType);
+        if (!colorNotSpawnList.Contains(colorType))
+        {
+            SpawnBrick(colorType);
+        }
+    }
+
+    public void RemoveAllBrick(ColorType colorType)
+    {
+        for (int i = brickList.Count -1; i >= 0; i--)
+        {
+            if (brickList[i].colorType == colorType)
+            {
+                colorNotSpawnList.Add(colorType);
+                Brick brick = brickList[i];
+                spawnPosList.Add(brick.transform.position);
+                brickList.RemoveAt(i);
+                Destroy(brick.gameObject);
+            }
+        }
     }
 }

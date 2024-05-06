@@ -2058,7 +2058,7 @@ GameObject:
   - component: {fileID: 7469066512343536711}
   - component: {fileID: 2707752092800844121}
   m_Layer: 0
-  m_Name: 'Stage 2 Stair '
+  m_Name: Stage 2 Stair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2217,8 +2217,8 @@ MonoBehaviour:
   - {fileID: 9221017671326319252}
   brick: {fileID: 5182414313446409757, guid: 253f97704c4bb554c9da9c1f897e34d4, type: 3}
   topStairPosList:
-  - {fileID: 6929199651716659067}
-  - {fileID: 6852555450807771216}
+  - {fileID: 8267649460285592374}
+  - {fileID: 5588065400400200733}
   spawnPosList: []
   brickList: []
 --- !u!1 &3000260510026641891
@@ -7334,7 +7334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717539818560324142, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.290001
+      value: 3.29
       objectReference: {fileID: 0}
     - target: {fileID: 5717539818560324142, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7386,9 +7386,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5717539818560324142, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
   m_PrefabInstance: {fileID: 5443438164797699579}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6852555450807771216 stripped
+--- !u!4 &8267649460285592374 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1482758276130166187, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4122602676961142477, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
   m_PrefabInstance: {fileID: 5443438164797699579}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7450449458299775956
@@ -7560,7 +7560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717539818560324142, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.290001
+      value: 3.29
       objectReference: {fileID: 0}
     - target: {fileID: 5717539818560324142, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7612,9 +7612,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5717539818560324142, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
   m_PrefabInstance: {fileID: 8411218413935305424}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6929199651716659067 stripped
+--- !u!4 &5588065400400200733 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1482758276130166187, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4122602676961142477, guid: 3954e34ac49c92949b111eac2b745e6c, type: 3}
   m_PrefabInstance: {fileID: 8411218413935305424}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9054883257575661387

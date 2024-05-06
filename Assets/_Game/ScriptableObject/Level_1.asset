@@ -15,3 +15,4 @@ MonoBehaviour:
   levelIndex: 1
   prefab: {fileID: 3941258324312536473, guid: 2ad17bb66647aba419505905b34bc574, type: 3}
   charAmount: 5
+  agentTypeId: 287145453
