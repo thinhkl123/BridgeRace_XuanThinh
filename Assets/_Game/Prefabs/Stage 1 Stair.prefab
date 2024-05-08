@@ -2829,7 +2829,7 @@ MonoBehaviour:
   - {fileID: 1461938484285345677}
   - {fileID: 7857580613773722760}
   - {fileID: 4720890734528788320}
-  brick: {fileID: 5182414313446409757, guid: 253f97704c4bb554c9da9c1f897e34d4, type: 3}
+  brick: {fileID: 6837072972374454744, guid: 253f97704c4bb554c9da9c1f897e34d4, type: 3}
   topStairPosList:
   - {fileID: 111405921781261690}
   spawnPosList: []

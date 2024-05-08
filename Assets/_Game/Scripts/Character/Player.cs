@@ -30,11 +30,14 @@ public class Player : Character
     {
         Init();
         animator.SetFloat("Speed", 0);
+        animator.SetBool("isWin", false);
     }
 
     private void FinishPoint_OnWin(object sender, System.EventArgs e)
     {
         ClearBrick();
+        //Debug.Log("isWin");
+        animator.SetBool("isWin", true);
     }
 
     private void Update()
@@ -50,6 +53,11 @@ public class Player : Character
     private void CalculateMove()
     {
         if (GameMainManager.Ins.state != GameMainManager.GameState.Playing)
+        {
+            return;
+        }
+
+        if (isFalling)
         {
             return;
         }
@@ -78,5 +86,30 @@ public class Player : Character
         }
 
         animator.SetFloat("Speed", direction.magnitude);
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        if (other.CompareTag("Bot") && !isStaring)
+        {
+            Bot bot = other.gameObject.GetComponent<Bot>();
+            if (bot.brickCount > brickCount)
+            {
+                Fall();
+            }
+        }
+    }
+
+    private void Fall()
+    {
+        animator.SetTrigger("Fall");
+        isFalling = true;
+        FallBrick();
+    }
+
+    public void EndFallAnimation()
+    {
+        isFalling = false;
     }
 }

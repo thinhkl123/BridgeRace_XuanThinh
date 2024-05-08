@@ -13,6 +13,7 @@ public class Bot : Character
     {
         CollectBrick,
         MoveStair,
+        Fall,
     }
 
     private State state;
@@ -28,7 +29,31 @@ public class Bot : Character
 
     private void Start()
     {
+        FinishPoint.OnLose += FinishPoint_OnLose;
+        LevelManager.Ins.OnLoadLevel += LevelManager_OnLoadLevel;
+
         ChangeToState(State.CollectBrick);
+    }
+
+    private void OnDestroy()
+    {
+        FinishPoint.OnWin -= FinishPoint_OnLose;
+        LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
+    }
+
+    private void FinishPoint_OnLose(object sender, System.EventArgs e)
+    {
+        ClearBrick();
+        animator.SetBool("isWin", true);
+    }
+
+    private void LevelManager_OnLoadLevel(object sender, System.EventArgs e)
+    {
+        Init();
+        destination = transform.position;
+        agent.agentTypeID = LevelManager.Ins.agentId;
+        animator.SetFloat("Speed", 0);
+        animator.SetBool("isWin", false);
     }
 
     private void Update()
@@ -67,6 +92,8 @@ public class Bot : Character
                     
                 }
                 break;
+            case State.Fall:
+                break;
         }
     }
 
@@ -79,6 +106,8 @@ public class Bot : Character
                 break;
             case State.MoveStair:
                 break;
+            case State.Fall:
+                break;
         }
 
         //Enter New State
@@ -87,12 +116,38 @@ public class Bot : Character
         switch (state)
         {
             case State.CollectBrick:
-                brickContainerAmount = 20; //Random.Range(7,10);
+                brickContainerAmount = Random.Range(7,15);
                 break;
             case State.MoveStair:
                 break;
+            case State.Fall:
+                animator.SetTrigger("Fall");
+                SetDestination(TF.position);
+                FallBrick();
+                break;
         }
     }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        if (other.CompareTag("Player") && !isStaring)
+        {
+            Player player = other.gameObject.GetComponent<Player>();
+            if (player.brickCount > brickCount)
+            {
+                ChangeToState(State.Fall);
+                isFalling = true;
+            }
+        }
+    }
+
+    public void EndFallAnimation()
+    {
+        ChangeToState(State.CollectBrick);
+        isFalling = false;
+    }
+
     private void UpdateBrickDestination()
     {
         Vector3 newDestination;
@@ -124,5 +179,10 @@ public class Bot : Character
         base.SetStage(newStage);
         destination = TF.position;
         ChangeToState(State.CollectBrick);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawLine(transform.position, transform.position + Vector3.down * 3.5f, Color.black);
     }
 }

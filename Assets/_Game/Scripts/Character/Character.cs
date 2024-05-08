@@ -12,15 +12,18 @@ public class Character : ColorObject
     const string FINISHPOINT = "FinishPoint";
 
     [SerializeField] private Transform brickContainer;
-    [SerializeField] private Brick brickPrefab;
+    [SerializeField] private PlayerBrick brickPrefab;
+    [SerializeField] private Brick brick;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask stairLayer;
     [SerializeField] protected Transform visual;
 
     public int brickCount;
     public Stage stage;
+    public bool isFalling;
+    public bool isStaring;
 
-    private List<Brick> brickList;
+    private List<PlayerBrick> brickList;
 
     private void Awake()
     {
@@ -29,17 +32,23 @@ public class Character : ColorObject
 
     public virtual void Init()
     {
-        brickList = new List<Brick>();
+        brickList = new List<PlayerBrick>();
         brickCount = 0;
+        isFalling = false;
+        isStaring = false;
+        visual.rotation = Quaternion.identity;
+        ClearBrick();
     }
 
     public bool CanMove(Vector3 nextPos)
     {
         bool isCanMove = true;
+        isStaring = false;
 
         RaycastHit hit;
-        if (Physics.Raycast(nextPos, Vector3.down, out hit, 3.5f, stairLayer))
+        if (Physics.Raycast(nextPos, Vector3.down, out hit, 3f, stairLayer))
         {
+            isStaring = true;
             Stair stair = hit.collider.gameObject.GetComponent<Stair>();
 
             if (stair.colorType != colorType && brickCount > 0)
@@ -87,20 +96,29 @@ public class Character : ColorObject
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(BRICKTAG))
         {
-            Brick brickOb;
-            if (other.gameObject.TryGetComponent<Brick>(out brickOb))
+            if (!isFalling)
             {
-                if (brickOb.colorType == colorType)
+                Brick brickOb;
+                if (other.gameObject.TryGetComponent<Brick>(out brickOb))
                 {
-                    //Brick brick = other.gameObject.GetComponent<Brick>();
-                    stage.RemoveBrick(brickOb);
-                    AddBirck();
+                    if (brickOb.colorType == colorType)
+                    {
+                        //Brick brick = other.gameObject.GetComponent<Brick>();
+                        stage.RemoveBrick(brickOb);
+                        AddBirck();
+                    }
+                    else if (brickOb.colorType == ColorType.None)
+                    {
+                        //Destroy(other.gameObject);
+                        other.gameObject.SetActive(false);
+                        AddBirck();
+                    }
                 }
-            } 
+            }
         } 
         else if (other.CompareTag(STAGE))
         {
@@ -124,17 +142,25 @@ public class Character : ColorObject
         brickCount++;
         if (brickList.Count == 0)
         {
-            Brick brickGo = Instantiate(brickPrefab, brickContainer);
+            //PlayerBrick brickGo = Instantiate(brickPrefab, brickContainer);
+            PlayerBrick brickGo = ObjectPooling.Ins.GetGameObject(brickPrefab.gameObject).GetComponent<PlayerBrick>();
+            brickGo.gameObject.SetActive(true);
+            brickGo.transform.SetParent(brickContainer);
             brickGo.transform.localPosition = new Vector3(0, 0, 0);
-            brickGo.GetComponent<Brick>().ChangeColor(colorType);
+            brickGo.transform.rotation = brickContainer.rotation;
+            brickGo.ChangeColor(colorType);
             brickList.Add(brickGo);
         }
         else
         {
             Vector3 brickPos = brickList[brickList.Count - 1].transform.localPosition + new Vector3(0,0.5f, 0);
-            Brick brickGo = Instantiate(brickPrefab, brickContainer);
+            //PlayerBrick brickGo = Instantiate(brickPrefab, brickContainer);
+            PlayerBrick brickGo = ObjectPooling.Ins.GetGameObject(brickPrefab.gameObject).GetComponent<PlayerBrick>();
+            brickGo.gameObject.SetActive(true);
+            brickGo.transform.SetParent(brickContainer);
             brickGo.transform.localPosition = brickPos;
-            brickGo.GetComponent<Brick>().ChangeColor(colorType);
+            brickGo.transform.rotation = brickContainer.rotation;
+            brickGo.ChangeColor(colorType);
             brickList.Add(brickGo);
         }
     }
@@ -143,8 +169,9 @@ public class Character : ColorObject
     {
         //Debug.Log("RemoveBrick");
         brickCount--;
-        Brick lastBrick = brickList[brickCount];
-        Destroy(lastBrick.gameObject);
+        PlayerBrick lastBrick = brickList[brickCount];
+        //Destroy(lastBrick.gameObject);
+        lastBrick.gameObject.SetActive(false);
         brickList.RemoveAt(brickCount);
     }
 
@@ -168,10 +195,23 @@ public class Character : ColorObject
     {
         for (int i = brickList.Count - 1; i >= 0; i--)
         {
-            Brick brick = brickList[i];
+            PlayerBrick brick = brickList[i];
             Destroy(brick.gameObject);
             brickList.RemoveAt(i);
         }
         brickCount = 0;
+    }
+
+    public void FallBrick()
+    {
+        for (int i=brickList.Count-1; i >= 0; i--)
+        {
+            Brick brickOb = Instantiate(brick, brickList[i].transform.position, Quaternion.identity, stage.transform);
+            RemoveBrick();
+            brickOb.ChangeColor(ColorType.None);
+            Rigidbody brickRb = brickOb.GetComponent<Rigidbody>();
+            brickRb.isKinematic = false;
+            brickRb.AddExplosionForce(1000f, transform.position, 5f);
+        }
     }
 }

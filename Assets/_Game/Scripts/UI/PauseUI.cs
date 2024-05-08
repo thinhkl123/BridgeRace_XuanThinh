@@ -17,6 +17,7 @@ public class PauseUI : UICanvas
         {
             Close(0);
             GameMainManager.Ins.state = GameMainManager.GameState.Playing;
+            UIManager.Ins.OpenUI<PlayUI>();
         });
 
         reStartBtn.onClick.AddListener(() =>

@@ -91,9 +91,10 @@ public class LevelManager : Singleton<LevelManager>
 
     private void SpawnChar()
     {
-        for (int i = 0; i < characterList.Count; i++)
+        for (int i = characterList.Count-1; i >= 0; i--)
         {
-            Destroy(characterList[i].gameObject);
+            //Destroy(characterList[i].gameObject);
+            characterList[i].gameObject.SetActive(false);
             characterList.RemoveAt(i);
         }
 
@@ -111,7 +112,11 @@ public class LevelManager : Singleton<LevelManager>
         for (int i = 1; i < charAmount; i++)
         {
             ranIdx = Random.Range(0, spawnCharPosList.Count);
-            Character bot = Instantiate(botPrefab, spawnCharPosList[ranIdx].position, botPrefab.transform.rotation);
+            //Character bot = Instantiate(botPrefab, spawnCharPosList[ranIdx].position, botPrefab.transform.rotation);
+            Character bot = ObjectPooling.Ins.GetGameObject(botPrefab.gameObject).GetComponent<Character>();
+            bot.gameObject.SetActive(true);
+            bot.transform.position = spawnCharPosList[ranIdx].position;
+            bot.ClearBrick();
             spawnCharPosList.RemoveAt(ranIdx);
             bot.ChangeColor(ColorManager.Ins.GetColorToObject());
             characterList.Add(bot);

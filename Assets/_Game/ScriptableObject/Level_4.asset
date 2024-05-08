@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level_4
   m_EditorClassIdentifier: 
   levelIndex: 4
-  prefab: {fileID: 8708774511397386255, guid: ebab8cc0a1e2d2f4899139e602051ac4, type: 3}
+  prefab: {fileID: 3409068225060821615, guid: 79597ef6bcb97b1469da6b14d2a7dc8d, type: 3}
   charAmount: 5
   agentTypeId: -629701670

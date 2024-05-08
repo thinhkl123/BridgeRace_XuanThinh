@@ -8,6 +8,7 @@ public class Stage : MonoBehaviour
 {
     [SerializeField] private List<Transform> brickTranformList;
     [SerializeField] private Brick brick;
+    [SerializeField] private float spawnTime = 20f;
 
     public List<Transform> topStairPosList;
     public List<Vector3> spawnPosList;
@@ -50,7 +51,11 @@ public class Stage : MonoBehaviour
 
         //Debug.Log(spawnPosList[idx] + " " + idx + " " + spawnPosList.Count);
 
-        Brick brickGO = Instantiate(brick, spawnPosList[idx], Quaternion.identity, this.transform);
+        //Brick brickGO = Instantiate(brick, spawnPosList[idx], Quaternion.identity, this.transform);
+        Brick brickGO = ObjectPooling.Ins.GetGameObject(brick.gameObject).GetComponent<Brick>();
+        brickGO.gameObject.SetActive(true);
+        brickGO.transform.position = spawnPosList[idx];
+        brickGO.transform.SetParent(this.transform);
         brickGO.ChangeColor(colorType);
         spawnPosList.RemoveAt(idx);
         brickList.Add(brickGO);
@@ -75,7 +80,8 @@ public class Stage : MonoBehaviour
         spawnPosList.Add(brick.transform.position);
         //Debug.Log(brick.transform);
         brickList.Remove(brick);
-        Destroy(brick.gameObject);
+        //Destroy(brick.gameObject);
+        brick.gameObject.SetActive(false);
         if (!colorNotSpawnList.Contains(colorType))
         {
             StartCoroutine(SpawnBrickAgain(colorType));
@@ -84,7 +90,7 @@ public class Stage : MonoBehaviour
 
     IEnumerator SpawnBrickAgain(ColorType colorType)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(spawnTime);
         if (!colorNotSpawnList.Contains(colorType))
         {
             SpawnBrick(colorType);
@@ -101,7 +107,8 @@ public class Stage : MonoBehaviour
                 Brick brick = brickList[i];
                 spawnPosList.Add(brick.transform.position);
                 brickList.RemoveAt(i);
-                Destroy(brick.gameObject);
+                //Destroy(brick.gameObject);
+                brick.gameObject.SetActive(false);
             }
         }
     }

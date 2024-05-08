@@ -54,6 +54,7 @@ MonoBehaviour:
   colorType: 1
   brickContainer: {fileID: 851911121385111455}
   brickPrefab: {fileID: 4782491245943912268, guid: 08106a34e7f808c48ac0b1c4cb9286c9, type: 3}
+  brick: {fileID: 6837072972374454744, guid: 253f97704c4bb554c9da9c1f897e34d4, type: 3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -82,7 +83,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -296,14 +297,17 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: e28c0908dc8f07f4aa9ec2605042b482, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: b94ffcef00ba6c647901eb14fc57641d, type: 2}
+      objectReference: {fileID: 9100000, guid: 3fff038ae40bc3a4a8dee327f732adcf, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: e28c0908dc8f07f4aa9ec2605042b482, type: 3}
       insertIndex: -1
       addedObject: {fileID: 851911121385111455}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e28c0908dc8f07f4aa9ec2605042b482, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5455189948549829265}
   m_SourcePrefab: {fileID: 100100000, guid: e28c0908dc8f07f4aa9ec2605042b482, type: 3}
 --- !u!137 &101448760478591990 stripped
 SkinnedMeshRenderer:
@@ -320,3 +324,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e28c0908dc8f07f4aa9ec2605042b482, type: 3}
   m_PrefabInstance: {fileID: 7126177498876603373}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7936518454988166844 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e28c0908dc8f07f4aa9ec2605042b482, type: 3}
+  m_PrefabInstance: {fileID: 7126177498876603373}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5455189948549829265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7936518454988166844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8691c65220972d048a2e7432a3065e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bot: {fileID: 270784983647525455}
