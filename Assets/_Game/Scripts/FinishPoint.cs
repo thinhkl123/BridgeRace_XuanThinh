@@ -25,7 +25,8 @@ public class FinishPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Win");
+            //Debug.Log("Win");
+            AudioManager.Ins.PlayWinSound();
             GameMainManager.Ins.state = GameMainManager.GameState.GameOver;
             ShowParicle();
             OnWin?.Invoke(this, EventArgs.Empty);
@@ -33,7 +34,8 @@ public class FinishPoint : MonoBehaviour
         }
         else if (other.CompareTag("Bot"))
         {
-            Debug.Log("Lose");
+            //Debug.Log("Lose");
+            AudioManager.Ins.PlayLoseSound();
             GameMainManager.Ins.state = GameMainManager.GameState.GameOver;
             ShowParicle();
             Bot bot = other.GetComponent<Bot>();

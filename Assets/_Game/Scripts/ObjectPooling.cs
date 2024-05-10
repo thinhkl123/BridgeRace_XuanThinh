@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectPooling : Singleton<ObjectPooling>
 {
     [SerializeField] private Brick brick;
-    [SerializeField] private PlayerBrick playerBrick;
+    //[SerializeField] private PlayerBrick playerBrick;
 
     Dictionary<GameObject, List<GameObject>> objectList = new Dictionary<GameObject, List<GameObject>>();
 
@@ -14,15 +14,20 @@ public class ObjectPooling : Singleton<ObjectPooling>
         LevelManager.Ins.OnLoadLevel += LevelManager_OnLoadLevel;
     }
 
+    private void OnDestroy()
+    {
+        //if (LevelManager.Ins != null)
+            //LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
+    }
+
     private void LevelManager_OnLoadLevel(object sender, System.EventArgs e)
     {
         if (objectList.ContainsKey(brick.gameObject))
         {
-            objectList.Remove(brick.gameObject);
-        }
-        if (objectList.ContainsKey(playerBrick.gameObject))
-        {
-            objectList.Remove(playerBrick.gameObject);
+            for (int i = 0; i < objectList[brick.gameObject].Count; i++)
+            {
+                objectList[brick.gameObject][i].SetActive(false);
+            }
         }
     }
 

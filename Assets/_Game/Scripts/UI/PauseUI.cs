@@ -33,4 +33,9 @@ public class PauseUI : UICanvas
             GameMainManager.Ins.state = GameMainManager.GameState.WaitToStart;
         });
     }
+
+    public void UpdateLevelText()
+    {
+        levelText.text = "Level " + LevelManager.Ins.curLevel.ToString();
+    }
 }

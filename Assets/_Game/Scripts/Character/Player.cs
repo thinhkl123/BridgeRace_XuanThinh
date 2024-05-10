@@ -23,7 +23,8 @@ public class Player : Character
     private void OnDestroy()
     {
         FinishPoint.OnWin -= FinishPoint_OnWin;
-        LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
+        //if (LevelManager.Ins != null)
+            //LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
     }
 
     private void LevelManager_OnLoadLevel(object sender, System.EventArgs e)
@@ -99,6 +100,18 @@ public class Player : Character
                 Fall();
             }
         }
+    }
+
+    public override void AddBirck()
+    {
+        base.AddBirck();
+        AudioManager.Ins.PlayCollectSound();
+    }
+
+    public override void RemoveBrick()
+    {
+        base.RemoveBrick();
+        AudioManager.Ins.PlayPutSound();
     }
 
     private void Fall()

@@ -15,6 +15,7 @@ public class PlayUI : UICanvas
         {
             Close(0);
             UIManager.Ins.OpenUI<PauseUI>();
+            UIManager.Ins.GetUI<PauseUI>().UpdateLevelText();
             GameMainManager.Ins.state = GameMainManager.GameState.Pause;
         });
     }

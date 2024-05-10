@@ -136,7 +136,7 @@ public class Character : ColorObject
         */
     }
 
-    private void AddBirck()
+    public virtual void AddBirck()
     {
         //Debug.Log("AddBrick");
         brickCount++;
@@ -165,12 +165,13 @@ public class Character : ColorObject
         }
     }
 
-    private void RemoveBrick()
+    public virtual void RemoveBrick()
     {
         //Debug.Log("RemoveBrick");
         brickCount--;
         PlayerBrick lastBrick = brickList[brickCount];
         //Destroy(lastBrick.gameObject);
+        lastBrick.transform.SetParent(null);
         lastBrick.gameObject.SetActive(false);
         brickList.RemoveAt(brickCount);
     }
@@ -196,7 +197,9 @@ public class Character : ColorObject
         for (int i = brickList.Count - 1; i >= 0; i--)
         {
             PlayerBrick brick = brickList[i];
-            Destroy(brick.gameObject);
+            brick.transform.SetParent(null);
+            brick.gameObject.SetActive(false);
+            //Destroy(brick.gameObject);
             brickList.RemoveAt(i);
         }
         brickCount = 0;
@@ -204,14 +207,21 @@ public class Character : ColorObject
 
     public void FallBrick()
     {
+        AudioManager.Ins.PlayFallSound();
+
         for (int i=brickList.Count-1; i >= 0; i--)
         {
-            Brick brickOb = Instantiate(brick, brickList[i].transform.position, Quaternion.identity, stage.transform);
+            //Brick brickOb = Instantiate(brick, brickList[i].transform.position, Quaternion.identity, stage.transform);
+            Brick brickOb = ObjectPooling.Ins.GetGameObject(brick.gameObject).GetComponent<Brick>();
+            brickOb.gameObject.SetActive(true);
+            brickOb.transform.SetParent(null);
+            brickOb.transform.position = brickList[i].transform.position;
             RemoveBrick();
             brickOb.ChangeColor(ColorType.None);
             Rigidbody brickRb = brickOb.GetComponent<Rigidbody>();
             brickRb.isKinematic = false;
             brickRb.AddExplosionForce(1000f, transform.position, 5f);
         }
+        
     }
 }

@@ -55,7 +55,8 @@ public class Stage : MonoBehaviour
         Brick brickGO = ObjectPooling.Ins.GetGameObject(brick.gameObject).GetComponent<Brick>();
         brickGO.gameObject.SetActive(true);
         brickGO.transform.position = spawnPosList[idx];
-        brickGO.transform.SetParent(this.transform);
+        brickGO.transform.SetParent(null);
+        brickGO.transform.rotation = Quaternion.identity;
         brickGO.ChangeColor(colorType);
         spawnPosList.RemoveAt(idx);
         brickList.Add(brickGO);

@@ -34,9 +34,19 @@ public class GameMainManager : Singleton<GameMainManager>
 
         UIManager.Ins.OpenUI<StartUI>();
 
-        //Open to update score level up
+        //Open WinUI to update score level up
         UIManager.Ins.OpenUI<WinUI>();
         UIManager.Ins.CloseUI<WinUI>();
+
+        //Open PlayUI to avoid bug
+        UIManager.Ins.OpenUI<PlayUI>();
+        UIManager.Ins.CloseUI<PlayUI>();
+    }
+
+    private void OnDestroy()
+    {
+        //if (LevelManager.Ins != null)
+            //LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
     }
 
     private void LevelManager_OnLoadLevel(object sender, EventArgs e)

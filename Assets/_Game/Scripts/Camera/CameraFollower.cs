@@ -37,7 +37,8 @@ public class CameraFollower : MonoBehaviour
     private void OnDestroy()
     {
         FinishPoint.OnLose -= FinishPoint_OnLose;
-        LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
+        //if (LevelManager.Ins != null)
+            //LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
     }
 
     private void FinishPoint_OnLose(object sender, FinishPoint.OnLoseEventArgs e)

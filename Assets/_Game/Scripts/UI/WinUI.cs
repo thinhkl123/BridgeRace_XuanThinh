@@ -52,6 +52,6 @@ public class WinUI : UICanvas
     public void UpdateLevelUpText()
     {
         levelUpText.text = (LevelManager.Ins.curLevel+1).ToString();
-        Debug.Log(levelUpText.text);
+        //Debug.Log(levelUpText.text);
     }
 }

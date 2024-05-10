@@ -37,8 +37,9 @@ public class Bot : Character
 
     private void OnDestroy()
     {
-        FinishPoint.OnWin -= FinishPoint_OnLose;
-        LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
+        FinishPoint.OnLose -= FinishPoint_OnLose;
+        //if (LevelManager.Ins != null)
+            //LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
     }
 
     private void FinishPoint_OnLose(object sender, System.EventArgs e)
@@ -181,8 +182,10 @@ public class Bot : Character
         ChangeToState(State.CollectBrick);
     }
 
+    /*
     private void OnDrawGizmos()
     {
         Debug.DrawLine(transform.position, transform.position + Vector3.down * 3.5f, Color.black);
     }
+    */
 }

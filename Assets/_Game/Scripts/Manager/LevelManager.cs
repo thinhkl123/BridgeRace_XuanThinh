@@ -55,8 +55,6 @@ public class LevelManager : Singleton<LevelManager>
 
     public void LoadLevel(int levelIdx)
     {
-        OnLoadLevel?.Invoke(this, EventArgs.Empty);
-
         UIManager.Ins.OpenUI<PlayUI>();
         UIManager.Ins.GetUI<PlayUI>().UpdateLevelText();
 
@@ -76,7 +74,7 @@ public class LevelManager : Singleton<LevelManager>
 
         SpawnChar();
 
-
+        OnLoadLevel?.Invoke(this, EventArgs.Empty);
     }
 
     private void GetSpawnCharPosList()
