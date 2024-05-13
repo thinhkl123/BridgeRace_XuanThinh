@@ -14,6 +14,7 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private Character playerPrefab;
     [SerializeField] private Character botPrefab;
     [SerializeField] private int maxLevel = 4;
+    [SerializeField] private Brick brick;
 
     public int MaxLevel
     {
@@ -57,6 +58,8 @@ public class LevelManager : Singleton<LevelManager>
     {
         UIManager.Ins.OpenUI<PlayUI>();
         UIManager.Ins.GetUI<PlayUI>().UpdateLevelText();
+
+        //ObjectPooling.Ins.HideKey(brick.gameObject);
 
         if (levelGameObject != null)
         {
@@ -103,7 +106,8 @@ public class LevelManager : Singleton<LevelManager>
         playerPrefab.transform.position = spawnCharPosList[ranIdx].position;
         spawnCharPosList.RemoveAt(ranIdx);
         playerPrefab.ChangeColor(ColorManager.Ins.GetColorToObject());
-        playerPrefab.gameObject.SetActive(true);
+        //playerPrefab.gameObject.SetActive(true);
+        playerPrefab.Init();
 
         //Spawn Bot
 
@@ -114,7 +118,7 @@ public class LevelManager : Singleton<LevelManager>
             Character bot = ObjectPooling.Ins.GetGameObject(botPrefab.gameObject).GetComponent<Character>();
             bot.gameObject.SetActive(true);
             bot.transform.position = spawnCharPosList[ranIdx].position;
-            bot.ClearBrick();
+            bot.Init();
             spawnCharPosList.RemoveAt(ranIdx);
             bot.ChangeColor(ColorManager.Ins.GetColorToObject());
             characterList.Add(bot);
@@ -123,6 +127,11 @@ public class LevelManager : Singleton<LevelManager>
 
     private void UpdateLevelMax()
     {
+        if (curLevel+1 > maxLevel)
+        {
+            return;
+        }
+
         if (curMaxLevel < curLevel+1)
         {
             curMaxLevel = curLevel + 1;

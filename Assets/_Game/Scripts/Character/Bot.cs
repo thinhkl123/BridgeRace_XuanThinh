@@ -20,11 +20,13 @@ public class Bot : Character
 
     public Vector3 destination;
 
-    private void Awake()
+    public override void Init()
     {
-        Init();
+        base.Init();
         destination = transform.position;
         agent.agentTypeID = LevelManager.Ins.agentId;
+        animator.SetFloat("Speed", 0);
+        animator.SetBool("isWin", false);
     }
 
     private void Start()
@@ -50,17 +52,15 @@ public class Bot : Character
 
     private void LevelManager_OnLoadLevel(object sender, System.EventArgs e)
     {
+        //Debug.Log("Init Bot");
         Init();
-        destination = transform.position;
-        agent.agentTypeID = LevelManager.Ins.agentId;
-        animator.SetFloat("Speed", 0);
-        animator.SetBool("isWin", false);
     }
 
     private void Update()
     {
         if (GameMainManager.Ins.state != GameMainManager.GameState.Playing)
         {
+            agent.enabled = false;
             return;
         }
 
@@ -170,6 +170,7 @@ public class Bot : Character
 
     private void SetDestination(Vector3 newDestination)
     {
+        agent.enabled = true;
         destination = newDestination;
         agent.SetDestination(destination);
         animator.SetFloat("Speed", 1f);

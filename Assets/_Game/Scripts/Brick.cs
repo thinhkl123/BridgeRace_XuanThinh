@@ -13,7 +13,7 @@ public class Brick : ColorObject
 
     private void Update()
     {
-        if (transform.position.y <= 0)
+        if (transform.position.y < 0)
         {
             gameObject.SetActive(false);
         }

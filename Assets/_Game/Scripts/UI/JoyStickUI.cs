@@ -6,9 +6,15 @@ public class JoyStickUI : MonoBehaviour
 {
     private void Start()
     {
-        GameMainManager.Ins.OnStateChange += GameManager_OnStateChange;
+        //GameMainManager.Ins.OnStateChange += GameManager_OnStateChange;
+        SettingUI.OnToggleChanged += SettingUI_OnToggleChanged;
 
-        Hide();
+        //Hide();
+    }
+
+    private void SettingUI_OnToggleChanged(object sender, SettingUI.OnToogleChangedEventArgs e)
+    {
+        transform.position = e.pos.position;
     }
 
     private void GameManager_OnStateChange(object sender, System.EventArgs e)

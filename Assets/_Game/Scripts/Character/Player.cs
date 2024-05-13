@@ -14,6 +14,13 @@ public class Player : Character
     private float moveHorizontal;
     private float moveVertical;
 
+    public override void Init()
+    {
+        base.Init();
+        animator.SetFloat("Speed", 0);
+        animator.SetBool("isWin", false);
+    }
+
     private void Start()
     {
         FinishPoint.OnWin += FinishPoint_OnWin;
@@ -29,9 +36,8 @@ public class Player : Character
 
     private void LevelManager_OnLoadLevel(object sender, System.EventArgs e)
     {
+        //Debug.Log("Init Player");
         Init();
-        animator.SetFloat("Speed", 0);
-        animator.SetBool("isWin", false);
     }
 
     private void FinishPoint_OnWin(object sender, System.EventArgs e)

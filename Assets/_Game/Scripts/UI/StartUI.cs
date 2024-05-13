@@ -9,6 +9,7 @@ public class StartUI : UICanvas
     [SerializeField] private LevelButton[] levelBtnList;
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private RectTransform levelContainer;
+    [SerializeField] private Button settingBtn;
 
     private RectTransform target;
 
@@ -17,6 +18,11 @@ public class StartUI : UICanvas
         startBtn.onClick.AddListener(() =>
         {
             StartButtonClick();   
+        });
+
+        settingBtn.onClick.AddListener(() =>
+        {
+            UIManager.Ins.OpenUI<SettingUI>();
         });
     }
 

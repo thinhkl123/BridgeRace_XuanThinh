@@ -45,4 +45,18 @@ public class AudioManager : Singleton<AudioManager>
     {
         losesound.Play();
     }
+
+    public void ChangeMusicVolume(float value)
+    {
+        bgMusic.volume = value;
+    }
+
+    public void ChangeSoundFXVolume(float value)
+    {
+        collectSound.volume = value;
+        fallsound.volume = value;
+        putSound.volume = value;
+        winSound.volume = value;
+        losesound.volume = value;
+    }
 }

@@ -14,14 +14,9 @@ public class ObjectPooling : Singleton<ObjectPooling>
         LevelManager.Ins.OnLoadLevel += LevelManager_OnLoadLevel;
     }
 
-    private void OnDestroy()
-    {
-        //if (LevelManager.Ins != null)
-            //LevelManager.Ins.OnLoadLevel -= LevelManager_OnLoadLevel;
-    }
-
     private void LevelManager_OnLoadLevel(object sender, System.EventArgs e)
     {
+        //Debug.Log("Hide Brick");
         if (objectList.ContainsKey(brick.gameObject))
         {
             for (int i = 0; i < objectList[brick.gameObject].Count; i++)
@@ -66,6 +61,17 @@ public class ObjectPooling : Singleton<ObjectPooling>
         if (objectList.ContainsKey(key))
         {
             objectList.Remove(key);
+        }
+    }
+
+    public void HideKey(GameObject key)
+    {
+        if (objectList.ContainsKey(key))
+        {
+            for (int i = 0; i < objectList[key].Count; i++)
+            {
+                objectList[brick.gameObject][i].SetActive(false);
+            }
         }
     }
 }

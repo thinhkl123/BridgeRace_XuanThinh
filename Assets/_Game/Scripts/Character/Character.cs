@@ -23,21 +23,22 @@ public class Character : ColorObject
     public bool isFalling;
     public bool isStaring;
 
-    private List<PlayerBrick> brickList;
+    private List<PlayerBrick> brickList = new List<PlayerBrick>();
 
     private void Awake()
     {
-        Init();
+        //Init();
     }
 
     public virtual void Init()
     {
+        ClearBrick();
         brickList = new List<PlayerBrick>();
         brickCount = 0;
         isFalling = false;
         isStaring = false;
         visual.rotation = Quaternion.identity;
-        ClearBrick();
+        transform.rotation = Quaternion.identity;
     }
 
     public bool CanMove(Vector3 nextPos)
@@ -46,7 +47,7 @@ public class Character : ColorObject
         isStaring = false;
 
         RaycastHit hit;
-        if (Physics.Raycast(nextPos, Vector3.down, out hit, 3f, stairLayer))
+        if (Physics.Raycast(nextPos, Vector3.down, out hit, 3.5f, stairLayer))
         {
             isStaring = true;
             Stair stair = hit.collider.gameObject.GetComponent<Stair>();
