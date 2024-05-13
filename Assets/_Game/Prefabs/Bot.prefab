@@ -64,6 +64,8 @@ MonoBehaviour:
   visual: {fileID: 7309339792797764614}
   brickCount: 0
   stage: {fileID: 0}
+  isFalling: 0
+  isStaring: 0
   agent: {fileID: 3577273147674072455}
   animator: {fileID: 3715418033270511228}
   brickContainerAmount: 0
@@ -128,7 +130,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 287145453
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

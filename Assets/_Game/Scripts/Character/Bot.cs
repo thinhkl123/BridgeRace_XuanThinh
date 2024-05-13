@@ -159,6 +159,10 @@ public class Bot : Character
             {
                 SetDestination(newDestination);
             }
+            else
+            {
+                ChangeToState(State.MoveStair);
+            }    
         }
     }
 
